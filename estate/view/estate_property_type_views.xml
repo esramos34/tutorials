@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <field name="name">Property Types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_estate_property_offer_by_type" model="ir.actions.act_window">
+        <field name="name">Offers</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('property_type_id', '=', active_id)]</field>
+    </record>
+
+    <record id="estate_property_type_list" model="ir.ui.view">
+        <field name="name">estate.property.type.list</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <list string="Property Types" default_order="sequence" >
+                <field name="sequence" widget="handle" />
+                <field name="name" string="Name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="estate_property_type_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <sheet>
+                    <header>
+                        <button type="action"
+                            name="%(action_estate_property_offer_by_type)d"
+                            class="oe_stat_button"
+                            icon="fa-envelope">
+                            <field name="offer_count" widget="statinfo" string="Offers" />
+                        </button>
+                    </header>
+                    <field name="name" string="Name" required="1" />
+                    <notebook>
+                        <page name="property" string="Properties">
+                            <field name="property_ids">
+                                <list>
+                                    <field name="name" string="Title" />
+                                    <field name="expected_price" string="Expected Price" />
+                                    <field name="state" string="State" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
